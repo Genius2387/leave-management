@@ -163,7 +163,6 @@ class ApplyLeave extends Component {
     }
 
     try {
-      // ── Server-time validation (requirement: must use /server-time) ──────────
       const { time } = await leaveApi.getServerTime();
       const serverToday = new Date(time);
       serverToday.setHours(0, 0, 0, 0);
@@ -202,7 +201,7 @@ class ApplyLeave extends Component {
 
       this.setState({ submitting: true });
 
-      // ── Create leave record via API ──────────────────────────────────────────
+      // Create leave record via API
       const newLeave = {
         employeeId: employee.id,
         employeeName: employee.name,
@@ -217,11 +216,11 @@ class ApplyLeave extends Component {
 
       const createdLeave = await leaveApi.applyLeave(newLeave);
 
-      // ── Deduct balance via API ───────────────────────────────────────────────
+      // Deduct balance via API
       const newBalance = employee.leaveBalance - totalDays;
       const updatedEmployee = await leaveApi.updateEmployeeBalance(employee.id, newBalance);
 
-      // ── Update MobX store ────────────────────────────────────────────────────
+      // Update MobX store
       store.addLeave(createdLeave);
       store.updateEmployee(updatedEmployee);
 
@@ -248,7 +247,6 @@ class ApplyLeave extends Component {
     const balance = employee ? employee.leaveBalance : 0;
     const isLowBalance = balance <= 5;
 
-    // Calculate preview of days when both dates are set
     let dayPreview = null;
     if (startDate && endDate && new Date(endDate) >= new Date(startDate)) {
       const d = this.calculateDays(startDate, endDate);
