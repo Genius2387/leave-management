@@ -182,26 +182,23 @@ class TeamLeaves extends Component {
     loading: true,
     error: null,
     actionSuccess: null,
-    actionLoading: null, // id of leave being actioned
+    actionLoading: null, 
   };
 
-  // ── Lifecycle ──────────────────────────────────────────────────────────────
+  // ── Lifecycle
 
   componentDidMount() {
     this.fetchLeaves();
   }
 
   componentDidUpdate(prevProps) {
-    // Re-fetch whenever URL query string changes (filter changed)
     if (prevProps.location.search !== this.props.location.search) {
       this.fetchLeaves();
     }
   }
 
-  // ── URL param helpers (no useSearchParams hook) ───────────────────────────
-
   getFiltersFromUrl() {
-    // Manually parse location.search — intentionally NOT using useSearchParams hook
+
     const params = new URLSearchParams(this.props.location.search);
     return {
       employee: params.get('employee') || '',
@@ -225,14 +222,10 @@ class TeamLeaves extends Component {
     this.props.navigate('/team-leaves');
   };
 
-  // ── API ────────────────────────────────────────────────────────────────────
+  // API 
 
   fetchLeaves = async () => {
     const { employee, status } = this.getFiltersFromUrl();
-
-    // Build filter params for the API call
-    // json-server: ?employeeName=Alice+Johnson&status=Pending
-    // Requirement: always refetch from API when filters change — never filter locally
     const apiFilters = {};
     if (employee) apiFilters.employeeName = employee;
     if (status) apiFilters.status = status;
@@ -257,7 +250,6 @@ class TeamLeaves extends Component {
     try {
       const updated = await leaveApi.updateLeaveStatus(leave.id, action);
 
-      // If rejecting, restore the employee's leave balance
       if (action === 'Rejected') {
         const emp = store.employees.find((e) => e.id === leave.employeeId);
         if (emp) {
@@ -267,7 +259,6 @@ class TeamLeaves extends Component {
         }
       }
 
-      // Update local state + MobX store
       this.setState((prev) => ({
         leaves: prev.leaves.map((l) => (l.id === leave.id ? updated : l)),
         actionLoading: null,
@@ -283,8 +274,7 @@ class TeamLeaves extends Component {
     }
   };
 
-  // ── Render helpers ─────────────────────────────────────────────────────────
-
+  // Render helpers
   getUniqueEmployees() {
     const store = this.context;
     return store.employees.map((e) => e.name);
