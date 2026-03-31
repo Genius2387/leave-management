@@ -1,10 +1,10 @@
-# 🏢 LeaveFlow — Leave Management System
+#  LeaveFlow — Leave Management System
 
 A full-featured Leave Management prototype built with **React JS (Class Components)**, **MobX + Context API**, **React Router v6**, and **json-server** as the mock backend.
 
 ---
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
@@ -19,7 +19,7 @@ A full-featured Leave Management prototype built with **React JS (Class Componen
 
 ---
 
-## ✅ Features
+##  Features
 
 ### Employee View
 - **Apply Leave** — Form with auto-filled name, date range picker, reason text area
@@ -49,7 +49,7 @@ A full-featured Leave Management prototype built with **React JS (Class Componen
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 | Concern | Choice | Notes |
 |---|---|---|
@@ -63,14 +63,14 @@ A full-featured Leave Management prototype built with **React JS (Class Componen
 
 ---
 
-## 📦 Prerequisites
+##  Prerequisites
 
 - **Node.js** ≥ 16.x
 - **npm** ≥ 8.x
 
 ---
 
-## 🚀 Installation & Setup
+##  Installation & Setup
 
 ```bash
 # 1. Clone the repository
@@ -83,11 +83,11 @@ npm install
 
 ---
 
-## ▶️ Running the App
+##  Running the App
 
 You need **two processes** running simultaneously:
 
-### Option A — Run both together (recommended)
+### Option A — Run both together
 
 ```bash
 npm run dev
@@ -111,7 +111,7 @@ Then open **http://localhost:3000** in your browser.
 
 ---
 
-## 🧪 Running E2E Tests (Cypress)
+##  Running E2E Tests (Cypress)
 
 Make sure **both** the React app and json-server are running first:
 
@@ -134,20 +134,20 @@ npm run cypress:run
 
 | Suite | Test |
 |---|---|
-| Apply Leave Validation | ❌ Rejects back-dated leave (uses `/server-time`) |
-| Apply Leave Validation | ❌ Rejects when end date < start date |
-| Apply Leave Validation | ❌ Rejects empty form submission |
-| Apply Leave Validation | ✅ Accepts a valid future leave |
-| URL-driven Filters | 🔄 Filters persist after hard page refresh |
-| URL-driven Filters | 🔗 Pre-applied filters from a shared URL load correctly |
-| URL-driven Filters | ✕ Clear filters button resets URL and dropdowns |
-| Manager Actions | 👔 Approve/Reject buttons shown only for Pending leaves |
-| Navigation | 🧭 Correct nav items rendered per role |
-| Navigation | 💡 Leave balance visible only in Employee role |
+| Apply Leave Validation |  Rejects back-dated leave (uses `/server-time`) |
+| Apply Leave Validation |  Rejects when end date < start date |
+| Apply Leave Validation |  Rejects empty form submission |
+| Apply Leave Validation |  Accepts a valid future leave |
+| URL-driven Filters |  Filters persist after hard page refresh |
+| URL-driven Filters |  Pre-applied filters from a shared URL load correctly |
+| URL-driven Filters |  Clear filters button resets URL and dropdowns |
+| Manager Actions |  Approve/Reject buttons shown only for Pending leaves |
+| Navigation |  Correct nav items rendered per role |
+| Navigation |  Leave balance visible only in Employee role |
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 leave-management/
@@ -184,7 +184,7 @@ leave-management/
 
 ---
 
-## 🏗 Architecture Decisions
+##  Architecture Decisions
 
 ### 1. `got` in the browser
 The assignment specifies `got` (a Node.js HTTP library), but the application is a CRA browser bundle — `got` cannot run in a browser. **Decision:** Created `src/api/got.js`, a thin wrapper that replicates the `got` v12 API (`got.get(url, { searchParams })`, `res.json()`, etc.) using the browser's native `fetch`. All call-sites are fully API-compatible with real `got`.
@@ -203,7 +203,7 @@ All styling is done via inline style objects co-located with each component. No 
 
 ---
 
-## ⚠️ Assumptions & Limitations
+##  Assumptions & Limitations
 
 1. **`got` compatibility:** As noted above, `got` is replaced by a fetch-based wrapper with an identical API. This is explicitly documented in `got.js`.
 
@@ -221,7 +221,7 @@ All styling is done via inline style objects co-located with each component. No 
 
 ---
 
-## 🔌 API Endpoints
+##  API Endpoints
 
 All served by `json-server` on `http://localhost:3001`:
 
@@ -237,7 +237,7 @@ All served by `json-server` on `http://localhost:3001`:
 
 ---
 
-## 👤 Default Data
+##  Default Data
 
 | Employee | Dept | Leave Balance |
 |---|---|---|
