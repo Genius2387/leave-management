@@ -183,7 +183,7 @@ class Dashboard extends Component {
     }
   };
 
-  // ── Data aggregation helpers ───────────────────────────────────────────────
+  // Data aggregation 
 
   getSummary(leaves) {
     return {
@@ -252,7 +252,6 @@ class Dashboard extends Component {
         role="img"
         aria-label="Stacked bar chart: leaves per employee"
       >
-        {/* Grid lines */}
         {yTicks.map((tick) => {
           const y = paddingTop + barAreaHeight - (tick / maxTotal) * barAreaHeight;
           return (
@@ -278,7 +277,6 @@ class Dashboard extends Component {
           );
         })}
 
-        {/* Bars */}
         {perEmployee.map((emp, i) => {
           const centerX = paddingLeft + gap * i + gap / 2;
           const barX = centerX - barWidth / 2;
@@ -309,10 +307,8 @@ class Dashboard extends Component {
             );
           });
 
-          // Total label on top
           const topY = paddingTop + barAreaHeight - (emp.total / maxTotal) * barAreaHeight - 6;
 
-          // X label
           const firstName = emp.name.split(' ')[0];
 
           return (
@@ -345,7 +341,6 @@ class Dashboard extends Component {
           );
         })}
 
-        {/* X axis line */}
         <line
           x1={paddingLeft}
           y1={paddingTop + barAreaHeight}
@@ -354,7 +349,7 @@ class Dashboard extends Component {
           stroke="#D1D5DB"
           strokeWidth="1"
         />
-        {/* Y axis line */}
+
         <line
           x1={paddingLeft}
           y1={paddingTop}
@@ -401,7 +396,7 @@ class Dashboard extends Component {
           <div style={s.errorAlert} role="alert">❌ {error}</div>
         )}
 
-        {/* ── Summary Cards ─────────────────────────────────────────────────── */}
+        {/* Summary Cards */}
         <div style={s.cardsGrid} data-testid="summary-cards">
           {summaryCards.map(({ label, value, icon, color }) => (
             <div key={label} style={s.card}>
@@ -416,7 +411,7 @@ class Dashboard extends Component {
           ))}
         </div>
 
-        {/* ── Bar Chart: Leaves per Employee ────────────────────────────────── */}
+        {/* Bar Chart: Leaves per Employee*/}
         <div style={s.section}>
           <div style={s.sectionTitle}>Leaves per Employee</div>
           <div style={s.sectionSub}>Stacked by status — Approved / Pending / Rejected</div>
@@ -439,7 +434,7 @@ class Dashboard extends Component {
           </div>
         </div>
 
-        {/* ── Employee Summary Table ─────────────────────────────────────────── */}
+        {/*Employee Summary Table*/}
         <div style={s.section}>
           <div style={s.sectionTitle}>Employee Leave Summary</div>
           <div style={s.sectionSub}>Detailed breakdown per employee</div>
@@ -490,7 +485,7 @@ class Dashboard extends Component {
           </div>
         </div>
 
-        {/* ── Department Stats ──────────────────────────────────────────────── */}
+        {/*Department Stats*/}
         <div style={s.section}>
           <div style={s.sectionTitle}>By Department</div>
           <div style={s.sectionSub}>Leave request counts grouped by department</div>
