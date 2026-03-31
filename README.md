@@ -7,14 +7,11 @@ A full-featured Leave Management prototype built with **React JS (Class Componen
 ##  Table of Contents
 
 - [Features](#features)
-- [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Installation & Setup](#installation--setup)
 - [Running the App](#running-the-app)
 - [Running E2E Tests (Cypress)](#running-e2e-tests-cypress)
 - [Project Structure](#project-structure)
-- [Architecture Decisions](#architecture-decisions)
-- [Assumptions & Limitations](#assumptions--limitations)
 - [API Endpoints](#api-endpoints)
 
 ---
@@ -47,19 +44,6 @@ A full-featured Leave Management prototype built with **React JS (Class Componen
 - Fully **mobile-responsive** using inline styles and CSS Grid/Flexbox
 - Loading states, error messages and empty states throughout
 
----
-
-##  Tech Stack
-
-| Concern | Choice | Notes |
-|---|---|---|
-| UI framework | React 18 (CRA) | Class components only |
-| Routing | React Router v6 | `withRouter` HOC bridges class components |
-| State management | MobX 6 + React Context | `makeObservable`, class store, `observer` HOC |
-| HTTP client | Custom `got` wrapper | Mimics got API over `fetch` (see Assumptions) |
-| Mock API | json-server 0.17 | Runs on port 3001 |
-| Styling | Inline styles | No CSS frameworks |
-| E2E testing | Cypress 13 | 10+ tests across 4 suites |
 
 ---
 
@@ -181,44 +165,6 @@ leave-management/
 ├── package.json
 └── README.md
 ```
-
----
-
-##  Architecture Decisions
-
-### 1. `got` in the browser
-The assignment specifies `got` (a Node.js HTTP library), but the application is a CRA browser bundle — `got` cannot run in a browser. **Decision:** Created `src/api/got.js`, a thin wrapper that replicates the `got` v12 API (`got.get(url, { searchParams })`, `res.json()`, etc.) using the browser's native `fetch`. All call-sites are fully API-compatible with real `got`.
-
-### 2. React Router v6 + Class Components
-RR v6 removed `withRouter` and class-component support. **Decision:** Created `src/utils/withRouter.js`, a functional HOC that uses `useLocation`, `useNavigate`, and `useParams` internally and passes them as props to the wrapped class component. This is the officially recommended migration pattern.
-
-### 3. URL-driven filters without `useSearchParams`
-Per requirements, `useSearchParams` hook is not used. **Decision:** Filters are parsed and written by directly manipulating `URLSearchParams` (the browser Web API) on `location.search` (injected via `withRouter`). The `navigate` function updates the URL; `componentDidUpdate` detects the change and re-fetches from the API.
-
-### 4. MobX + Context
-The MobX store singleton is passed through React Context so class components access it via `static contextType = AppContext`. The `Provider` from `mobx-react` is also included for `inject()` compatibility. All reactive class components are wrapped with `observer()`.
-
-### 5. Styling
-All styling is done via inline style objects co-located with each component. No CSS framework is used. Mobile responsiveness uses CSS Grid `auto-fit/minmax` and Flexbox `flex-wrap`.
-
----
-
-##  Assumptions & Limitations
-
-1. **`got` compatibility:** As noted above, `got` is replaced by a fetch-based wrapper with an identical API. This is explicitly documented in `got.js`.
-
-2. **Authentication is simulated:** The "role switcher" maps each role to a fixed employee ID (Employee → Alice Johnson, Manager → Bob Smith, Admin → Carol White). This is a prototype; real auth would issue tokens and look up the user.
-
-3. **Leave year scope:** The system doesn't filter by calendar year. All historical leaves are shown regardless of year. A production system would scope to the current annual period.
-
-4. **Concurrent state conflicts:** If two managers approve/reject the same leave simultaneously, the last write wins (json-server default). Optimistic locking is not implemented.
-
-5. **Pending deducts balance:** Per the requirement ("Deduct leave balance when a new leave is applied"), a Pending application immediately reduces the balance. If rejected, the balance is restored. This mirrors how most leave systems work to prevent double-booking.
-
-6. **json-server `_like` filters:** The employee name filter uses exact match (`?employeeName=Alice Johnson`), not a fuzzy search. This is sufficient for a prototype with a known employee list.
-
-7. **Mobile layout:** The app is responsive but optimised primarily for desktop. Tables become horizontally scrollable on small screens.
-
 ---
 
 ##  API Endpoints
@@ -237,12 +183,4 @@ All served by `json-server` on `http://localhost:3001`:
 
 ---
 
-##  Default Data
-
-| Employee | Dept | Leave Balance |
-|---|---|---|
-| Alice Johnson (Employee role) | Engineering | 18 |
-| Bob Smith (Manager role) | Marketing | 22 |
-| Carol White (Admin role) | HR | 22 |
-| David Brown | Engineering | 20 |
 
