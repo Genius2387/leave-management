@@ -155,7 +155,7 @@ leave-management/
 │   └── index.html              # HTML shell
 ├── src/
 │   ├── api/
-│   │   ├── got.js              # Browser-compatible got wrapper (fetch-based)
+│   │   ├── got.js              # Browser-compatible got wrapper
 │   │   └── leaveApi.js         # All API call functions
 │   ├── components/
 │   │   └── Navbar.js           # Nav + role switcher + balance pill
@@ -176,7 +176,7 @@ leave-management/
 │   └── e2e/
 │       └── leave.cy.js         # All Cypress E2E tests
 ├── cypress.config.js           # Cypress configuration
-├── db.json                     # json-server seed data
+├── db.json                     # json-server data
 ├── server.js                   # Custom json-server with /server-time route
 ├── package.json
 └── README.md
@@ -237,7 +237,7 @@ All served by `json-server` on `http://localhost:3001`:
 
 ---
 
-## 👤 Default Seed Data
+## 👤 Default Data
 
 | Employee | Dept | Leave Balance |
 |---|---|---|
@@ -246,4 +246,3 @@ All served by `json-server` on `http://localhost:3001`:
 | Carol White (Admin role) | HR | 22 |
 | David Brown | Engineering | 20 |
 
-Seven pre-seeded leave records (mix of Approved / Pending / Rejected) are included to make the Dashboard and Team Leaves pages interesting on first load.
