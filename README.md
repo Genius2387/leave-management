@@ -58,10 +58,10 @@ A full-featured Leave Management prototype built with **React JS (Class Componen
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/leave-management.git
+git clone https://github.com/Genius2387/leave-management.git
 cd leave-management
 
-# 2. Install all dependencies (React app + dev tools)
+# 2. Install all dependencies
 npm install
 ```
 
